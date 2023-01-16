@@ -2,7 +2,6 @@ import React from "react";
 import { render } from "react-dom";
 
 import {
-  FieldExtensionSDK,
   init,
   locations,
 } from "@contentful/app-sdk";
@@ -15,6 +14,7 @@ import { SDKProvider } from "@contentful/react-apps-toolkit";
 import Field from "./components/Field";
 
 import LocalhostWarning from "./components/LocalhostWarning";
+// import ConfigScreen from "./components/ConfigScreen";
 
 if (process.env.NODE_ENV === "development" && window.self === window.top) {
   // You can remove this if block before deploying your app
@@ -30,8 +30,12 @@ if (process.env.NODE_ENV === "development" && window.self === window.top) {
     const ComponentLocationSettings = [
       {
         location: locations.LOCATION_ENTRY_FIELD,
-        component: <SDKProvider><Field sdk={sdk as FieldExtensionSDK} /></SDKProvider>,
+        component: <SDKProvider><Field /></SDKProvider>,
       }
+      // {
+      //   location: locations.LOCATION_APP_CONFIG,
+      //   component: <SDKProvider><ConfigScreen /></SDKProvider>,
+      // }
     ];
 
     // Select a component depending on a location in which the app is rendered.
