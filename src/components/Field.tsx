@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FieldExtensionSDK } from "@contentful/app-sdk";
 import {MultipleEntryReferenceEditor} from '@contentful/field-editor-reference'
 import {Button, Menu, Checkbox, Spinner, DisplayText, Text } from '@contentful/f36-components';
 import { ChevronDownIcon } from '@contentful/f36-icons';
 import { useSDK } from "@contentful/react-apps-toolkit";
 
-interface FieldProps {
-  sdk: FieldExtensionSDK;
-}
 
-const Field = (props: FieldProps) => {
+const Field = () => {
   const sdk = useSDK<FieldExtensionSDK>();
   const [options, setOptions] = useState<any>([]);
   const [checked, setChecked] = useState<string[]>([]);
@@ -40,7 +37,7 @@ const Field = (props: FieldProps) => {
     }
   }, []);
 
-  const onClickCallback = (e: any, id: string) => {
+  const onClickCallback = (e: ChangeEvent<HTMLInputElement>,  id: string) => {
     const checkedIndex = checked.indexOf(id); 
     if(checkedIndex < 0) {
       setChecked([...checked, id]);
@@ -56,7 +53,6 @@ const Field = (props: FieldProps) => {
   }
 
   const addEntries = () => {
-    console.log(checked);
     const newValues = checked.map((item: any) => (
         {
           "sys": {
@@ -95,7 +91,7 @@ const Field = (props: FieldProps) => {
                 id={`${option.sys.id} + '-' + ${index}`}
                 value={option.sys.id}
                 isChecked={checked.includes(option.sys.id)}
-                onChange={(e: any) => onClickCallback(e, option.sys.id)}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onClickCallback(e, option.sys.id)}
               >
                 <div style={{ display: 'flex', flexDirection: 'column'}}>
                    <Text fontSize="fontSizeL" lineHeight="lineHeightL">{option?.fields?.name?.[locale] ?? ' '}</Text>
